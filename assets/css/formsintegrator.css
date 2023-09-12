@@ -1,0 +1,68 @@
+.fancybox-content {
+  padding-top: 20px;
+}
+
+.custom-modal-title {
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: bold;
+  text-align: center;
+}
+.custom-modal-description {
+  font-size: 15px;
+  line-height: 17px;
+  text-align: center;
+}
+.custom-modal-line {
+  height: 1px;
+  width: 100%;
+  display: block;
+  background: #EAEAEA;
+  margin: 25px 0;
+}
+
+.custom-site-form-field {
+  margin: 10px 0;
+  position: relative;
+}
+.custom-site-form-field__label {
+  position: absolute;
+  top: 8px;
+  padding-left: 10px;
+  font-size: 13px;
+}
+.custom-site-form-field__input {
+  height: 50px;
+  padding-top: 17px;
+}
+.custom-site-form-field__textarea {
+  min-height: 100px;
+}
+.custom-site-form-field__input, .custom-site-form-field__textarea {
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid #e1e1e1;
+  background: #f2f2f2;
+  padding-bottom: 0;
+  padding-left: 10px;
+  padding-right: 35px;
+  padding-top: 20px;
+  outline: none !important;
+}
+.custom-site-form-field__input:focus, .custom-site-form-field__textarea:focus {
+  border-color: transparent;
+}
+.custom-site-form-button {
+  padding-bottom: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  margin-top: 15px;
+  border: 0;
+  border-radius: 4px;
+  color: white;
+  background: #00aeef;
+  width: 100%;
+}
+
+/*# sourceMappingURL=formsintegrator.css.map */
