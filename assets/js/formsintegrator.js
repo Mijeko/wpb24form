@@ -42,7 +42,7 @@ class FormHandler {
 
 
             instance.form = $(event.target);
-            instance.runEvent(instance.getEvent(instance.EVENT_BEFORE_SUBMIT));
+            instance.runEvent(instance.EVENT_BEFORE_SUBMIT);
 
             instance.resetErrors();
 
@@ -58,7 +58,7 @@ class FormHandler {
 
                     if (data.status === 200) {
                         instance.form[0].reset();
-                        instance.runEvent(instance.getEvent(instance.EVENT_SUCCESS_SUBMIT));
+                        instance.runEvent(instance.EVENT_SUCCESS_SUBMIT);
                     }
                 })
         });
@@ -84,7 +84,9 @@ class FormHandler {
         });
     }
 
-    runEvent(callable) {
+    runEvent(eventName) {
+
+        const callable = this.getEvent(eventName);
 
         if (typeof callable !== 'function') {
             return false;
