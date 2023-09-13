@@ -2,8 +2,12 @@
 
 namespace Forms\Builder;
 
+use Forms\Handlers\IFormHandler;
+
 interface IForm
 {
+    public static function handler(): IFormHandler;
+
     public function uniqKey(): string;
 
     public function make(): void;

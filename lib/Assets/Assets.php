@@ -60,9 +60,13 @@ class Assets implements IAssets
 
         foreach ($map as $wordpressHook => $bundles) {
             foreach ($bundles as $bundle) {
-                add_action($wordpressHook, function () use ($bundle) {
-                    echo HtmlHelper::shortTag('link', ['rel' => 'stylesheet', 'href' => $bundle['src']]);
-                }, $bundle['priority']);
+                add_action(
+                    $wordpressHook,
+                    function () use ($bundle) {
+                        echo HtmlHelper::shortTag('link', ['rel' => 'stylesheet', 'href' => $bundle['src']]);
+                    },
+                    $bundle['priority']
+                );
             }
         }
     }

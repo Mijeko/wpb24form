@@ -2,21 +2,15 @@
 
 namespace Ajax;
 
-use Bitrix24\Bitrix24Api;
-use Forms\Builder\AMainForm;
 use Forms\Builder\CallbackForm;
 use Forms\Builder\HeaderForm;
 use Forms\Fields\DropdownField;
 use Forms\Fields\InputField;
 use Forms\Fields\TextareaField;
 use Forms\FormGenerator;
-use Forms\Handlers\FormHandler;
 use Forms\Handlers\IFormHandler;
 use Html\Modal\Builder\MainModal;
 use Html\Modal\ModalGenerator;
-use Http\Converter\Json;
-use Http\HttpCurl;
-use Http\Response\JsonResponse;
 
 class AjaxRequestRouter
 {
@@ -28,7 +22,8 @@ class AjaxRequestRouter
     {
         return [
             self::ACTION_HANDLE_FORM => [
-                HeaderForm::getInstance()->uniqKey() => FormHandler::class
+                HeaderForm::getInstance()->uniqKey() => HeaderForm::class,
+                CallbackForm::getInstance()->uniqKey() => CallbackForm::class,
             ],
             self::ACTION_GET_FORM => [
                 HeaderForm::getInstance()->uniqKey() => function () {
@@ -41,13 +36,17 @@ class AjaxRequestRouter
                         new MainModal(
                             'Закажите звонок',
                             CallbackForm::build([
-                                InputField::build('name', [
+                                InputField::build('TITLE', [
+                                    'value' => 'Заполнение формы сайта Рассчитать стоимость',
+                                    'type'=>'hidden',
+                                ]),
+                                InputField::build('NAME', [
                                     'label' => 'Имя',
                                 ]),
-                                InputField::build('phone', [
+                                InputField::build('PHONE', [
                                     'label' => 'Телефон',
                                 ]),
-                                DropdownField::build('topic')
+                                DropdownField::build('TOPIC')
                                     ->variants([
                                         'Проектирование бассейнов' => 'Проектирование бассейнов',
                                         'Строительство и реконструкция бассейнов' => 'Строительство и реконструкция бассейнов',
@@ -61,7 +60,7 @@ class AjaxRequestRouter
                                         'Сборные бассейны' => 'Сборные бассейны',
                                     ])
                                     ->default('Тема обращения'),
-                                TextareaField::build('comment', [
+                                TextareaField::build('COMMENT', [
                                     'label' => 'Комментарий',
                                 ]),
                             ])
@@ -108,16 +107,13 @@ class AjaxRequestRouter
             case self::ACTION_HANDLE_FORM:
                 $actions = $this->getActions($action);
 
-                $handlerClass = $actions[$params['form']];
+                $formClass = $actions[$params['form']];
                 unset($params['form']);
 
-                /* @var $model IFormHandler */
-                $model = new $handlerClass(
-                    new JsonResponse(),
-                    new Bitrix24Api(new HttpCurl(), new Json()),
-                );
+                /* @var $formHandler IFormHandler */
+                $formHandler = $formClass::handler();
 
-                $model->handle($params);
+                $formHandler->handle($params);
 
                 break;
 

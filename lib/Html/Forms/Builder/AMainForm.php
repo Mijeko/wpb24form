@@ -29,14 +29,14 @@ abstract class AMainForm implements IForm
 
     public function formHeader(): void
     {
-        HtmlHelper::beginForm(array(
+        echo HtmlHelper::beginForm(array(
             'method' => 'post',
             'action' => '/wp-content/plugins/formsintegrator/ajax.php',
             'class' => 'js-handle-custom-form'
         ));
 
-        HtmlHelper::hidden('form', $this->uniqKey());
-        HtmlHelper::hidden('action', AjaxRequestRouter::ACTION_HANDLE_FORM);
+        echo HtmlHelper::hidden('form', $this->uniqKey());
+        echo HtmlHelper::hidden('action', AjaxRequestRouter::ACTION_HANDLE_FORM);
     }
 
 
@@ -44,18 +44,18 @@ abstract class AMainForm implements IForm
     {
         foreach ($this->fields as $fieldModel) {
             if ($fieldModel instanceof InputField) {
-                SiteFormHelper::input($fieldModel->fieldName(), $fieldModel->getOptions());
+                echo SiteFormHelper::input($fieldModel->fieldName(), $fieldModel->getOptions());
             }
 
             if ($fieldModel instanceof TextareaField) {
-                SiteFormHelper::textarea($fieldModel->fieldName(), $fieldModel->getOptions());
+                echo SiteFormHelper::textarea($fieldModel->fieldName(), $fieldModel->getOptions());
             }
 
             if ($fieldModel instanceof DropdownField) {
                 $options = $fieldModel->getOptions();
                 $options['default'] = $fieldModel->getDefault();
 
-                SiteFormHelper::dropdown($fieldModel->fieldName(), $fieldModel->getVariants(), $options);
+                echo SiteFormHelper::dropdown($fieldModel->fieldName(), $fieldModel->getVariants(), $options);
             }
         }
     }

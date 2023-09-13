@@ -1,3 +1,4 @@
+console.log('i work');
 document.addEventListener('DOMContentLoaded', function () {
     $(document).on('submit', '.js-handle-custom-form', function (event) {
         event.preventDefault();

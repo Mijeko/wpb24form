@@ -19,40 +19,51 @@ class SiteFormHelper
             $options[] = HtmlHelper::option($value, $key);
         }
 
-        echo HtmlHelper::tag('select', implode('', $options), $htmlOptions);
+        return HtmlHelper::tag('select', implode('', $options), $htmlOptions);
     }
 
-    public static function input($name,$options=array())
+    public static function input($name, $htmlOptions = array())
     {
-        ['label'=>$label] = $options;
-        unset($options['label']);
+        ['label' => $label] = $htmlOptions;
+        ['type' => $type] = $htmlOptions;
+        ['class' => $class] = $htmlOptions;
+        unset($htmlOptions['label']);
+        unset($htmlOptions['type']);
+        unset($htmlOptions['class']);
 
-        echo HtmlHelper::openTag('div', ['class' => 'custom-site-form-field']);
+        $defaultInputOptions = [
+            'type' => $type,
+            'name' => $name,
+            'class' => sprintf('%s %s', 'custom-site-form-field__input', $class),
+        ];
 
-            echo HtmlHelper::div($label, ['class'=>'custom-site-form-field__label']);
+        $response = HtmlHelper::openTag('div', ['class' => 'custom-site-form-field']);
 
-            echo HtmlHelper::shortTag('input', [
-                'type' => 'text',
-                'name' => $name,
-                'class'=>'custom-site-form-field__input',
-            ]);
-        echo HtmlHelper::endTag('div');
+            if($label) $response .= HtmlHelper::div($label, ['class'=>'custom-site-form-field__label']);
+
+            $response .= HtmlHelper::shortTag('input', array_merge($defaultInputOptions, $htmlOptions));
+
+        $response .= HtmlHelper::endTag('div');
+
+        return $response;
     }
 
     public static function textarea($name,$options=array())
     {
-        ['label'=>$label] = $options;
+        ['label' => $label] = $options;
         unset($options['label']);
 
-        echo HtmlHelper::openTag('div', ['class' => 'custom-site-form-field']);
+        $response = HtmlHelper::openTag('div', ['class' => 'custom-site-form-field']);
 
-            echo HtmlHelper::div($label, ['class'=>'custom-site-form-field__label']);
+            $response .= HtmlHelper::div($label, ['class'=>'custom-site-form-field__label']);
 
-            echo HtmlHelper::openTag('textarea', [
+            $response .= HtmlHelper::openTag('textarea', [
                 'name' => $name,
                 'class'=>'custom-site-form-field__textarea'
             ]);
-            echo HtmlHelper::endTag('textarea');
-        echo HtmlHelper::endTag('div');
+            $response .= HtmlHelper::endTag('textarea');
+        $response .= HtmlHelper::endTag('div');
+
+        return $response;
     }
 }
