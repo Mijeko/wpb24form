@@ -16,6 +16,7 @@ class FormHandler {
 
     selector;
     config;
+    form;
     EVENT_BEFORE_SUBMIT = 'beforeSubmit';
     EVENT_SUCCESS_SUBMIT = 'successSubmit';
 
@@ -39,12 +40,15 @@ class FormHandler {
         $(document).on('submit', this.selector, function (event) {
             event.preventDefault();
 
-            const form = $(event.target);
+
+            instance.form = $(event.target);
             instance.runEvent(instance.getEvent(instance.EVENT_BEFORE_SUBMIT));
 
-            fetch(form.attr('action'), {
-                method: form.attr('method'),
-                body: new FormData(form[0]),
+            instance.resetErrors();
+
+            fetch(instance.form.attr('action'), {
+                method: instance.form.attr('method'),
+                body: new FormData(instance.form[0]),
             }).then(response => response.json())
                 .then(function (data) {
 
@@ -53,16 +57,27 @@ class FormHandler {
                     }
 
                     if (data.status === 200) {
-                        form[0].reset();
+                        instance.form[0].reset();
                         instance.runEvent(instance.getEvent(instance.EVENT_SUCCESS_SUBMIT));
                     }
                 })
         });
     }
 
+    resetErrors() {
+        let fields = this.form[0].querySelectorAll('.custom-site-form-field');
+
+        if (fields) {
+            fields.forEach(field => {
+                field.classList.remove('isNoValid');
+            })
+        }
+    }
+
     applyValid(fieldData) {
-        Object.keys(fieldData).map(key => {
-            let field = document.getElementById(`custom-form-valid-${key}`);
+        let form = this.form[0];
+        Object.keys(fieldData).map(function (key) {
+            let field = form.querySelector(`#custom-form-valid-${key}`);
             if (field) {
                 field.classList.add('isNoValid');
             }
