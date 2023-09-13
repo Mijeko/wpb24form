@@ -11,15 +11,9 @@ use Html\Helpers\SiteFormHelper;
 
 abstract class AMainForm implements IForm
 {
-    public array $fields;
-
-    public static function build(array $fields)
+    public static function build()
     {
-        $obj = new static();
-
-        $obj->fields = $fields;
-
-        return $obj;
+        return new static();
     }
 
     public static function getInstance()
@@ -42,7 +36,7 @@ abstract class AMainForm implements IForm
 
     public function formBody(): void
     {
-        foreach ($this->fields as $fieldModel) {
+        foreach ($this->fields() as $fieldModel) {
             if ($fieldModel instanceof InputField) {
                 echo SiteFormHelper::input($fieldModel->fieldName(), $fieldModel->getOptions());
             }

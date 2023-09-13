@@ -9,17 +9,26 @@ class JsonResponse implements IResponse
     const KEY_ITEMS = 'data';
 
     public $content;
+    public $status;
 
-    public function input($content)
+
+    public function success(): self
     {
-        $this->content = $content;
+        $this->status = self::STATUS_OK;
+        return $this;
     }
 
-    public function out()
+    public function error(): self
     {
-        $this->emit_one([
-            'test' => $this->content,
-        ]);
+        $this->status = self::STATUS_ERROR;
+        return $this;
+    }
+
+    public function out(array $content = null)
+    {
+        $content = $content ?? $this->content ?? null;
+
+        $this->emit_one($content);
     }
 
     public function emit_one(array $data = null)
@@ -27,7 +36,7 @@ class JsonResponse implements IResponse
         header('Content-Type: application/json; charset=utf-8');
 
         $responseData = [
-            'status' => self::STATUS_OK,
+            'status' => $this->status ?? self::STATUS_OK,
         ];
 
         if ($data) {

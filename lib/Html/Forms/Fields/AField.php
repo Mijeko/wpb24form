@@ -2,7 +2,9 @@
 
 namespace Forms\Fields;
 
-abstract class AField implements IField
+use Bitrix24\CrmField\ICrmField;
+
+abstract class AField implements IField, ICrmField
 {
     public string $inputName;
     public array $options;

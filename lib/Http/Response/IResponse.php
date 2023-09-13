@@ -4,6 +4,9 @@ namespace Http\Response;
 
 interface IResponse
 {
-    public function input($content);
-    public function out();
+    public function success(): self;
+
+    public function error(): self;
+
+    public function out(array $content = null);
 }

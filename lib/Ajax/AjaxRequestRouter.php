@@ -4,9 +4,6 @@ namespace Ajax;
 
 use Forms\Builder\CallbackForm;
 use Forms\Builder\HeaderForm;
-use Forms\Fields\DropdownField;
-use Forms\Fields\InputField;
-use Forms\Fields\TextareaField;
 use Forms\FormGenerator;
 use Forms\Handlers\IFormHandler;
 use Html\Modal\Builder\MainModal;
@@ -32,56 +29,13 @@ class AjaxRequestRouter
             ],
             self::ACTION_GET_MODAL => [
                 ModalGenerator::MODAL_CALLBACK => function () {
-                    ModalGenerator::show(
-                        new MainModal(
-                            'Закажите звонок',
-                            CallbackForm::build([
-                                InputField::build('TITLE', [
-                                    'value' => 'Заполнение формы сайта Рассчитать стоимость',
-                                    'type'=>'hidden',
-                                ]),
-                                InputField::build('NAME', [
-                                    'label' => 'Имя',
-                                ]),
-                                InputField::build('PHONE', [
-                                    'label' => 'Телефон',
-                                ]),
-                                DropdownField::build('TOPIC')
-                                    ->variants([
-                                        'Проектирование бассейнов' => 'Проектирование бассейнов',
-                                        'Строительство и реконструкция бассейнов' => 'Строительство и реконструкция бассейнов',
-                                        'Оборудование для бассейнов' => 'Оборудование для бассейнов',
-                                        'Системы управления бассейнов' => 'Системы управления бассейнов',
-                                        'Покрытия для бассейнов' => 'Покрытия для бассейнов',
-                                        'Сервисное и техническое обслуживание бассейнов' => 'Сервисное и техническое обслуживание бассейнов',
-                                        'Рассчитать стоимость' => 'Рассчитать стоимость',
-                                        'Бетонные бассейны' => 'Бетонные бассейны',
-                                        'Композитные бассейны' => 'Композитные бассейны',
-                                        'Сборные бассейны' => 'Сборные бассейны',
-                                    ])
-                                    ->default('Тема обращения'),
-                                TextareaField::build('COMMENT', [
-                                    'label' => 'Комментарий',
-                                ]),
-                            ])
-                        ),
-                    );
+                    ModalGenerator::show(new MainModal('Закажите звонок', CallbackForm::build()));
                 },
                 ModalGenerator::MODAL_HEADER => function () {
                     ModalGenerator::show(
                         new MainModal(
                             'Заказать звонок',
-                            HeaderForm::build([
-                                InputField::build('name', [
-                                    'label' => 'Имя',
-                                ]),
-                                InputField::build('phone', [
-                                    'label' => 'Телефон',
-                                ]),
-                                TextareaField::build('comment', [
-                                    'label' => 'Комментарий',
-                                ]),
-                            ]),
+                            HeaderForm::build(),
                             'Поделитесь мнением о нашей работе или задайте нам любой интересующий вас вопрос в поле комментарий'
                         )
                     );
