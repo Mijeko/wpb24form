@@ -12,6 +12,11 @@ class DropdownField extends AField implements IDropdown
         return new static($inputName, $options);
     }
 
+    public function normalize()
+    {
+        // TODO: Implement normalize() method.
+    }
+
     public function variants(array $variants, $default = null)
     {
         $this->variants = $variants;

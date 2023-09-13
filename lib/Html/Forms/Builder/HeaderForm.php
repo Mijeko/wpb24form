@@ -33,8 +33,8 @@ class HeaderForm extends AMainForm
     {
         return new FormHandler(
             new JsonResponse(),
-            new Bitrix24Api(new HttpCurl(), new Json()),
             new SimpleValidator([]),
+            new Bitrix24Api(new HttpCurl(), new Json()),
         );
     }
 

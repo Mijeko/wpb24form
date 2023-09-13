@@ -3,7 +3,6 @@
 namespace Forms\Builder;
 
 use Forms\Handlers\IFormHandler;
-use Forms\Validators\IFormValidator;
 
 interface IForm
 {
@@ -13,9 +12,7 @@ interface IForm
 
     public function uniqKey(): string;
 
-    public function make(): void;
-
-    public function response();
+    public function buildForm(): void;
 
     public function formHeader(): void;
 

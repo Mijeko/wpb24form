@@ -55,26 +55,26 @@ class AjaxRequestRouter
         return false;
     }
 
-    public function route($action, $params)
+    public function route($action, $formData)
     {
         switch ($action) {
             case self::ACTION_HANDLE_FORM:
                 $actions = $this->getActions($action);
 
-                $formClass = $actions[$params['form']];
-                unset($params['form']);
+                $formClass = $actions[$formData['form']];
+                unset($formData['form']);
 
                 /* @var $formHandler IFormHandler */
                 $formHandler = $formClass::handler();
 
-                $formHandler->handle($params);
+                $formHandler->handle($formData);
 
                 break;
 
             case self::ACTION_GET_FORM:
 
                 $actions = $this->getActions($action);
-                $formName = $params['FORM'];
+                $formName = $formData['FORM'];
 
                 if (array_key_exists($formName, $actions)) {
                     call_user_func($actions[$formName]);
@@ -83,7 +83,7 @@ class AjaxRequestRouter
             case self::ACTION_GET_MODAL:
 
                 $actions = $this->getActions($action);
-                $formName = $params['modal'];
+                $formName = $formData['modal'];
 
                 if (array_key_exists($formName, $actions)) {
                     call_user_func($actions[$formName]);

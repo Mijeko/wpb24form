@@ -10,10 +10,9 @@ interface IFormHandler
 {
     public function __construct(
         IResponse $response,
-        Bitrix24Api $b24Api,
         IFormValidator $validator,
+        Bitrix24Api $b24Api
     );
 
     public function handle($formData);
-
 }

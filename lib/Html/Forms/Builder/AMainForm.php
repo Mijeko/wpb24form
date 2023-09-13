@@ -8,8 +8,9 @@ use Forms\Fields\InputField;
 use Forms\Fields\TextareaField;
 use Html\Helpers\HtmlHelper;
 use Html\Helpers\SiteFormHelper;
+use Html\IContent;
 
-abstract class AMainForm implements IForm
+abstract class AMainForm implements IForm, IContent
 {
     public static function build()
     {
@@ -61,7 +62,7 @@ abstract class AMainForm implements IForm
         echo HtmlHelper::endForm();
     }
 
-    public function make(): void
+    public function buildForm(): void
     {
         $this->formHeader();
 
@@ -72,6 +73,6 @@ abstract class AMainForm implements IForm
 
     public function response()
     {
-        $this->make();
+        $this->buildForm();
     }
 }

@@ -52,7 +52,6 @@ class CallbackForm extends AMainForm
     {
         return new FormHandler(
             new JsonResponse(),
-            new Bitrix24Api(new HttpCurl(), new Json()),
             new SimpleValidator(array(
                 'TITLE' => 'required',
                 'NAME' => 'required',
@@ -60,6 +59,7 @@ class CallbackForm extends AMainForm
                 'UF_CRM_1694592756' => 'required',
                 'COMMENT' => 'required',
             )),
+            new Bitrix24Api(new HttpCurl(), new Json()),
         );
     }
 

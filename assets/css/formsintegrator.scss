@@ -30,6 +30,12 @@
     margin: 10px 0;
     position: relative;
 
+    &.isNoValid {
+      .custom-site-form-field__input, .custom-site-form-field__textarea {
+        border-color: red;
+      }
+    }
+
     &__label {
       position: absolute;
       top: 8px;
@@ -77,5 +83,11 @@
     color: white;
     background: #00aeef;
     width: 100%;
+    cursor: pointer;
+    transition: 0.3s ease all;
+
+    &:hover {
+      background: rgba(0, 174, 239, 0.52);
+    }
   }
 }

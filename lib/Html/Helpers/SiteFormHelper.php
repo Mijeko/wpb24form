@@ -37,7 +37,7 @@ class SiteFormHelper
             'class' => sprintf('%s %s', 'custom-site-form-field__input', $class),
         ];
 
-        $response = HtmlHelper::openTag('div', ['class' => 'custom-site-form-field']);
+        $response = HtmlHelper::openTag('div', ['class' => 'custom-site-form-field', 'id' => 'custom-form-valid-' . $name]);
 
             if($label) $response .= HtmlHelper::div($label, ['class'=>'custom-site-form-field__label']);
 
@@ -53,13 +53,13 @@ class SiteFormHelper
         ['label' => $label] = $options;
         unset($options['label']);
 
-        $response = HtmlHelper::openTag('div', ['class' => 'custom-site-form-field']);
+        $response = HtmlHelper::openTag('div', ['class' => 'custom-site-form-field', 'id' => 'custom-form-valid-' . $name]);
 
             $response .= HtmlHelper::div($label, ['class'=>'custom-site-form-field__label']);
 
             $response .= HtmlHelper::openTag('textarea', [
                 'name' => $name,
-                'class'=>'custom-site-form-field__textarea'
+                'class' => 'custom-site-form-field__textarea'
             ]);
             $response .= HtmlHelper::endTag('textarea');
         $response .= HtmlHelper::endTag('div');

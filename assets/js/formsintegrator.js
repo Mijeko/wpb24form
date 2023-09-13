@@ -47,12 +47,25 @@ class FormHandler {
                 body: new FormData(form[0]),
             }).then(response => response.json())
                 .then(function (data) {
+
+                    if (data.status === 500) {
+                        instance.applyValid(data.data.fields);
+                    }
+
                     if (data.status === 200) {
                         form[0].reset();
                         instance.runEvent(instance.getEvent(instance.EVENT_SUCCESS_SUBMIT));
                     }
                 })
+        });
+    }
 
+    applyValid(fieldData) {
+        Object.keys(fieldData).map(key => {
+            let field = document.getElementById(`custom-form-valid-${key}`);
+            if (field) {
+                field.classList.add('isNoValid');
+            }
         });
     }
 
