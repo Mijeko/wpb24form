@@ -3,11 +3,16 @@
 namespace Ajax;
 
 use Bitrix24\Bitrix24Api;
-use Forms\Builder\FormHeader;
+use Forms\Builder\AMainForm;
+use Forms\Builder\CallbackForm;
+use Forms\Builder\HeaderForm;
+use Forms\Fields\DropdownField;
+use Forms\Fields\InputField;
+use Forms\Fields\TextareaField;
 use Forms\FormGenerator;
 use Forms\Handlers\FormHandler;
 use Forms\Handlers\IFormHandler;
-use Html\Modal\Builder\ModalHeader;
+use Html\Modal\Builder\MainModal;
 use Html\Modal\ModalGenerator;
 use Http\Converter\Json;
 use Http\HttpCurl;
@@ -23,19 +28,61 @@ class AjaxRequestRouter
     {
         return [
             self::ACTION_HANDLE_FORM => [
-                FormHeader::getInstance()->uniqKey() => FormHandler::class
+                HeaderForm::getInstance()->uniqKey() => FormHandler::class
             ],
             self::ACTION_GET_FORM => [
-                FormHeader::getInstance()->uniqKey() => function () {
-                    FormGenerator::show(new FormHeader());
+                HeaderForm::getInstance()->uniqKey() => function () {
+                    FormGenerator::show(new HeaderForm());
                 },
             ],
             self::ACTION_GET_MODAL => [
+                ModalGenerator::MODAL_CALLBACK => function () {
+                    ModalGenerator::show(
+                        new MainModal(
+                            'Закажите звонок',
+                            CallbackForm::build([
+                                InputField::build('name', [
+                                    'label' => 'Имя',
+                                ]),
+                                InputField::build('phone', [
+                                    'label' => 'Телефон',
+                                ]),
+                                DropdownField::build('topic')
+                                    ->variants([
+                                        'Проектирование бассейнов' => 'Проектирование бассейнов',
+                                        'Строительство и реконструкция бассейнов' => 'Строительство и реконструкция бассейнов',
+                                        'Оборудование для бассейнов' => 'Оборудование для бассейнов',
+                                        'Системы управления бассейнов' => 'Системы управления бассейнов',
+                                        'Покрытия для бассейнов' => 'Покрытия для бассейнов',
+                                        'Сервисное и техническое обслуживание бассейнов' => 'Сервисное и техническое обслуживание бассейнов',
+                                        'Рассчитать стоимость' => 'Рассчитать стоимость',
+                                        'Бетонные бассейны' => 'Бетонные бассейны',
+                                        'Композитные бассейны' => 'Композитные бассейны',
+                                        'Сборные бассейны' => 'Сборные бассейны',
+                                    ])
+                                    ->default('Тема обращения'),
+                                TextareaField::build('comment', [
+                                    'label' => 'Комментарий',
+                                ]),
+                            ])
+                        ),
+                    );
+                },
                 ModalGenerator::MODAL_HEADER => function () {
                     ModalGenerator::show(
-                        new ModalHeader(
+                        new MainModal(
                             'Заказать звонок',
-                            new FormHeader(),
+                            HeaderForm::build([
+                                InputField::build('name', [
+                                    'label' => 'Имя',
+                                ]),
+                                InputField::build('phone', [
+                                    'label' => 'Телефон',
+                                ]),
+                                TextareaField::build('comment', [
+                                    'label' => 'Комментарий',
+                                ]),
+                            ]),
                             'Поделитесь мнением о нашей работе или задайте нам любой интересующий вас вопрос в поле комментарий'
                         )
                     );

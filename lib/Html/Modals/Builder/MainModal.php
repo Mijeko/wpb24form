@@ -3,13 +3,13 @@
 namespace Html\Modal\Builder;
 
 use Forms\Builder\IForm;
-use Html\HtmlHelper;
+use Html\Helpers\HtmlHelper;
 
-class ModalHeader implements IModal
+class MainModal implements IModal
 {
     private IForm $content;
     private string $title;
-    private string $description;
+    private $description;
 
     public function __construct(string $title, IForm $content = null, string $description = null)
     {
@@ -25,20 +25,20 @@ class ModalHeader implements IModal
 
     public function build()
     {
-        HtmlHelper::openTag('div', ['style' => 'width:600px;']);
+        echo HtmlHelper::openTag('div', ['style' => 'width:600px;']);
 
         if ($this->title) {
-            HtmlHelper::div($this->title, ['class' => 'custom-modal-title']);
+            echo HtmlHelper::div($this->title, ['class' => 'custom-modal-title']);
         }
 
         if ($this->description) {
-            HtmlHelper::div($this->description, ['class' => 'custom-modal-description']);
+            echo HtmlHelper::div($this->description, ['class' => 'custom-modal-description']);
         }
 
-        HtmlHelper::tag('div', null, array('class' => 'custom-modal-line'));
+        echo HtmlHelper::tag('div', null, array('class' => 'custom-modal-line'));
 
         is_null($this->content) ? null : $this->content->response();
-        HtmlHelper::endTag('div');
+        echo HtmlHelper::endTag('div');
     }
 
     public function response()

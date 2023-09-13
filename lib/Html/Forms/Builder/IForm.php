@@ -4,11 +4,15 @@ namespace Forms\Builder;
 
 interface IForm
 {
-    public function uniqKey();
+    public function uniqKey(): string;
 
-    public function map(): array;
-
-    public function build();
+    public function make(): void;
 
     public function response();
+
+    public function formHeader(): void;
+
+    public function formBody(): void;
+
+    public function formFooter(): void;
 }

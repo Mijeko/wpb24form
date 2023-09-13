@@ -2,7 +2,7 @@
 
 namespace Assets;
 
-use Html\HtmlHelper;
+use Html\Helpers\HtmlHelper;
 
 class Assets implements IAssets
 {
@@ -46,8 +46,7 @@ class Assets implements IAssets
                 add_action(
                     $wordpressHook,
                     function () use ($bundle) {
-                        HtmlHelper::openTag('script', ['src' => $bundle['src']]);
-                        HtmlHelper::endTag('script');
+                        echo HtmlHelper::tag('script', null, ['src' => $bundle['src']]);
                     },
                     $bundle['priority']
                 );
@@ -62,7 +61,7 @@ class Assets implements IAssets
         foreach ($map as $wordpressHook => $bundles) {
             foreach ($bundles as $bundle) {
                 add_action($wordpressHook, function () use ($bundle) {
-                    HtmlHelper::shortTag('link', ['rel' => 'stylesheet', 'href' => $bundle['src']]);
+                    echo HtmlHelper::shortTag('link', ['rel' => 'stylesheet', 'href' => $bundle['src']]);
                 }, $bundle['priority']);
             }
         }

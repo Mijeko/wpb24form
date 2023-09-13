@@ -13,10 +13,12 @@ abstract class AField implements IField
         $this->options = $options;
     }
 
-    /**
-     * @return string
-     */
-    public function getInputName(): string
+    public static function build(string $inputName, array $options = array())
+    {
+        return new static($inputName, $options);
+    }
+
+    public function fieldName(): string
     {
         return $this->inputName;
     }
