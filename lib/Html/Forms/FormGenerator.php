@@ -2,11 +2,11 @@
 
 namespace Forms;
 
-use Forms\Builder\IForm;
+use Html\IContent;
 
 class FormGenerator
 {
-    public static function show(IForm $form)
+    public static function show(IContent $form)
     {
         $form->response();
     }
