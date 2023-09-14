@@ -31,6 +31,12 @@ class HtmlHelper
         return self::tag('option', $label, $options);
     }
 
+    public static function img(string $src, array $options = array())
+    {
+        $options['src'] = $src;
+        return self::shortTag('img', $options);
+    }
+
     public static function a($content, array $options = array()): string
     {
         return self::tag('a', $content, $options);

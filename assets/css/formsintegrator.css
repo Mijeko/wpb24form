@@ -18,17 +18,16 @@
   height: 100%;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   display: none;
 }
 .custom-modal-success.active {
   display: flex;
 }
 .custom-modal-success__icon {
-  width: 48px;
   margin-right: 15px;
 }
 .custom-modal-success__icon img {
-  width: 100%;
   object-fit: contain;
 }
 .custom-modal-success__label {

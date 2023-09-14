@@ -42,18 +42,12 @@ class MainModal implements IModal
         is_null($this->content) ? null : $this->content->response();
         echo HtmlHelper::endTag('div');
 
-        echo <<<HTML
-<div class="custom-modal-stash">
-<div class="custom-modal-success">
-<div class="custom-modal-success__icon">
-<img src="/wp-content/plugins/formsintegrator/assets/images/ok.svg">
-</div>
-<div class="custom-modal-success__label">
-Форма успешно отправлена
-</div>
-</div>
-</div>
-HTML;
+        echo HtmlHelper::openTag('div', array('class' => 'custom-modal-stash'));
+            echo HtmlHelper::openTag('div', array('class' => 'custom-modal-success'));
+                echo HtmlHelper::tag('div', HtmlHelper::img('/wp-content/plugins/formsintegrator/assets/images/ok.svg'),array('class' => 'custom-modal-success__icon'));
+                echo HtmlHelper::tag('div','Форма успешно отправлена', array('class' => 'custom-modal-success__label'));
+            echo HtmlHelper::endTag('div');
+        echo HtmlHelper::endTag('div');
 
         echo HtmlHelper::endTag('div');
     }
