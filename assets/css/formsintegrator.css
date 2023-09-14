@@ -1,7 +1,44 @@
-.fancybox-content {
-  padding-top: 20px;
+.custom-modal {
+  padding: 0;
+  position: relative;
 }
-
+.custom-modal-stash {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.custom-modal-stash.active {
+  display: block;
+}
+.custom-modal-success {
+  background: #25d366;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.custom-modal-success.active {
+  display: flex;
+}
+.custom-modal-success__icon {
+  width: 48px;
+  margin-right: 15px;
+}
+.custom-modal-success__icon img {
+  width: 100%;
+  object-fit: contain;
+}
+.custom-modal-success__label {
+  font-size: 32px;
+  color: white;
+  font-weight: bold;
+}
+.custom-modal-container {
+  padding: 40px;
+}
 .custom-modal-title {
   font-size: 24px;
   line-height: 33px;

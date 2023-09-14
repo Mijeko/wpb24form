@@ -72,9 +72,38 @@ class FormHandler {
                     if (data.status === 200) {
                         instance.form[0].reset();
                         instance.runEvent(instance.EVENT_SUCCESS_SUBMIT);
+                        instance.showSuccessStash('success');
                     }
                 })
         });
+    }
+
+    showSuccessStash(type) {
+
+        this.activeStash();
+
+        switch (type) {
+            case 'success':
+                let el = document.querySelector('.custom-modal-success');
+                if (el) {
+                    el.classList.add('active');
+                }
+                break;
+        }
+    }
+
+    activeStash() {
+        let el = document.querySelector('.custom-modal-stash');
+        if (el) {
+            el.classList.add('active');
+        }
+    }
+
+    deactiveStash() {
+        let el = document.querySelector('.custom-modal-stash');
+        if (el) {
+            el.classList.remove('active');
+        }
     }
 
     resetErrors() {
