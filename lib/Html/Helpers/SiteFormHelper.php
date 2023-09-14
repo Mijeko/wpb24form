@@ -48,6 +48,32 @@ class SiteFormHelper
         return $response;
     }
 
+    public static function phone($name, $htmlOptions = array())
+    {
+        ['label' => $label] = $htmlOptions;
+        ['type' => $type] = $htmlOptions;
+        ['class' => $class] = $htmlOptions;
+        unset($htmlOptions['label']);
+        unset($htmlOptions['type']);
+        unset($htmlOptions['class']);
+
+        $defaultInputOptions = [
+            'type' => $type,
+            'name' => $name,
+            'class' => sprintf('%s %s', 'custom-site-form-field__input', $class),
+        ];
+
+        $response = HtmlHelper::openTag('div', ['class' => 'custom-site-form-field', 'id' => 'custom-form-valid-' . $name]);
+
+            if($label) $response .= HtmlHelper::div($label, ['class'=>'custom-site-form-field__label']);
+
+            $response .= HtmlHelper::shortTag('input', array_merge($defaultInputOptions, $htmlOptions));
+
+        $response .= HtmlHelper::endTag('div');
+
+        return $response;
+    }
+
     public static function textarea($name,$options=array())
     {
         ['label' => $label] = $options;

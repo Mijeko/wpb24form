@@ -6,16 +6,7 @@ class DropdownField extends AField implements IDropdown
 {
     public array $variants;
     public $default;
-
-    public static function build(string $inputName, array $options = array())
-    {
-        return new static($inputName, $options);
-    }
-
-    public function normalize()
-    {
-        // TODO: Implement normalize() method.
-    }
+    public $alias;
 
     public function variants(array $variants, $default = null)
     {

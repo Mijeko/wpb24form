@@ -3,7 +3,9 @@
 namespace Forms\Builder;
 
 use Bitrix24\Bitrix24Api;
+use Forms\Fields\HiddenInput;
 use Forms\Fields\InputField;
+use Forms\Fields\InputPhoneField;
 use Forms\Fields\TextareaField;
 use Forms\Handlers\FormHandler;
 use Forms\Handlers\IFormHandler;
@@ -17,23 +19,41 @@ class HeaderForm extends AMainForm
     public function fields(): array
     {
         return [
-            InputField::build('name', [
+
+            HiddenInput::build('utm_source')->alias('UF_CRM_1663239201'),
+            HiddenInput::build('utm_medium')->alias('UF_CRM_1663239210'),
+            HiddenInput::build('utm_campaign')->alias('UF_CRM_1663239221'),
+
+            HiddenInput::build('TITLE', [
+                'value' => 'Заполнение формы сайта Рассчитать стоимость',
+                'type' => 'hidden',
+            ]),
+
+            InputField::build('NAME', [
                 'label' => 'Имя',
             ]),
-            InputField::build('phone', [
+
+            InputPhoneField::build('PHONE', [
                 'label' => 'Телефон',
             ]),
+
             TextareaField::build('comment', [
                 'label' => 'Комментарий',
-            ]),
+            ])->alias('UF_CRM_1549698769'),
         ];
     }
 
     public static function handler(): IFormHandler
     {
         return new FormHandler(
+            new static(),
             new JsonResponse(),
-            new SimpleValidator([]),
+            new SimpleValidator(array(
+                'TITLE' => 'required',
+                'NAME' => 'required',
+                'PHONE' => 'required',
+                'comment' => 'required',
+            )),
             new Bitrix24Api(new HttpCurl(), new Json()),
         );
     }

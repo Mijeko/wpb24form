@@ -4,7 +4,9 @@ namespace Forms\Builder;
 
 use Bitrix24\Bitrix24Api;
 use Forms\Fields\DropdownField;
+use Forms\Fields\HiddenInput;
 use Forms\Fields\InputField;
+use Forms\Fields\InputPhoneField;
 use Forms\Fields\TextareaField;
 use Forms\Handlers\FormHandler;
 use Forms\Handlers\IFormHandler;
@@ -18,17 +20,24 @@ class CallbackForm extends AMainForm
     public function fields(): array
     {
         return [
-            InputField::build('TITLE', [
+
+            HiddenInput::build('utm_source')->alias('UF_CRM_1663239201'),
+            HiddenInput::build('utm_medium')->alias('UF_CRM_1663239210'),
+            HiddenInput::build('utm_campaign')->alias('UF_CRM_1663239221'),
+
+            HiddenInput::build('TITLE', [
                 'value' => 'Заполнение формы сайта Рассчитать стоимость',
-                'type' => 'hidden',
             ]),
+
             InputField::build('NAME', [
                 'label' => 'Имя',
             ]),
-            InputField::build('PHONE', [
+
+            InputPhoneField::build('PHONE', [
                 'label' => 'Телефон',
             ]),
-            DropdownField::build('UF_CRM_1694592756')
+
+            DropdownField::build('utm_term')
                 ->variants([
                     'Проектирование бассейнов' => 'Проектирование бассейнов',
                     'Строительство и реконструкция бассейнов' => 'Строительство и реконструкция бассейнов',
@@ -41,23 +50,26 @@ class CallbackForm extends AMainForm
                     'Композитные бассейны' => 'Композитные бассейны',
                     'Сборные бассейны' => 'Сборные бассейны',
                 ])
-                ->default('Тема обращения'),
-            TextareaField::build('COMMENT', [
+                ->default('Тема обращения')
+                ->alias('UF_CRM_1694592756'),
+
+            TextareaField::build('comment', [
                 'label' => 'Комментарий',
-            ]),
+            ])->alias('UF_CRM_1549698769'),
         ];
     }
 
     public static function handler(): IFormHandler
     {
         return new FormHandler(
+            new static(),
             new JsonResponse(),
             new SimpleValidator(array(
                 'TITLE' => 'required',
                 'NAME' => 'required',
                 'PHONE' => 'required',
-                'UF_CRM_1694592756' => 'required',
-                'COMMENT' => 'required',
+                'comment' => 'required',
+                'utm_term' => 'required',
             )),
             new Bitrix24Api(new HttpCurl(), new Json()),
         );

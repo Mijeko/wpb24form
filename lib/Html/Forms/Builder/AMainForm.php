@@ -4,7 +4,9 @@ namespace Forms\Builder;
 
 use Ajax\AjaxRequestRouter;
 use Forms\Fields\DropdownField;
+use Forms\Fields\HiddenInput;
 use Forms\Fields\InputField;
+use Forms\Fields\InputPhoneField;
 use Forms\Fields\TextareaField;
 use Html\Helpers\HtmlHelper;
 use Html\Helpers\SiteFormHelper;
@@ -38,8 +40,16 @@ abstract class AMainForm implements IForm, IContent
     public function formBody(): void
     {
         foreach ($this->fields() as $fieldModel) {
-            if ($fieldModel instanceof InputField) {
+
+            if (
+                $fieldModel instanceof InputField
+                || $fieldModel instanceof HiddenInput
+            ) {
                 echo SiteFormHelper::input($fieldModel->fieldName(), $fieldModel->getOptions());
+            }
+
+            if ($fieldModel instanceof InputPhoneField) {
+                echo SiteFormHelper::phone($fieldModel->fieldName(), $fieldModel->getOptions());
             }
 
             if ($fieldModel instanceof TextareaField) {

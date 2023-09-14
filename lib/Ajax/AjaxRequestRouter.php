@@ -31,7 +31,7 @@ class AjaxRequestRouter
                 ModalGenerator::MODAL_CALLBACK => function () {
                     ModalGenerator::show(new MainModal('Закажите звонок', CallbackForm::build()));
                 },
-                ModalGenerator::MODAL_HEADER => function () {
+                ModalGenerator::MODAL_CALCULATE => function () {
                     ModalGenerator::show(
                         new MainModal(
                             'Заказать звонок',

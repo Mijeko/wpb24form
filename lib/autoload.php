@@ -1,17 +1,18 @@
 <?php
 
+require_once 'Helpers/ArrayHelper.php';
+
 require_once 'Assets/IAssets.php';
 require_once 'Assets/Assets.php';
 
 require_once 'Html/IContent.php';
 
 require_once 'Bitrix24/CrmField/ICrmField.php';
-require_once 'Bitrix24/CrmField/CrmField.php';
 require_once 'Bitrix24/Bitrix24Api.php';
 
 require_once 'Html/Helpers/HtmlHelper.php';
 require_once 'Html/Helpers/SiteFormHelper.php';
-require_once 'Html/Helpers/ToolsHelper.php';
+require_once 'Html/Helpers/FancyboxHtmlHelper.php';
 
 require_once 'Html/Forms/FormGenerator.php';
 
@@ -26,6 +27,8 @@ require_once 'Html/Forms/Fields/AField.php';
 require_once 'Html/Forms/Fields/InputField.php';
 require_once 'Html/Forms/Fields/TextareaField.php';
 require_once 'Html/Forms/Fields/DropdownField.php';
+require_once 'Html/Forms/Fields/InputPhoneField.php';
+require_once 'Html/Forms/Fields/HiddenInput.php';
 
 require_once 'Html/Forms/Handlers/IFormHandler.php';
 require_once 'Html/Forms/Handlers/FormHandler.php';

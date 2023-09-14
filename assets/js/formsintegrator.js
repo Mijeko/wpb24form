@@ -40,15 +40,28 @@ class FormHandler {
         $(document).on('submit', this.selector, function (event) {
             event.preventDefault();
 
-
+            const urlParams = new URLSearchParams(window.location.search);
             instance.form = $(event.target);
-            instance.runEvent(instance.EVENT_BEFORE_SUBMIT);
+            let formData = new FormData(instance.form[0]);
 
+
+            for (const [key, value] of urlParams.entries()) {
+
+                if (formData.has(key)) {
+                    if (formData.get(key).length <= 0) {
+                        formData.delete(key);
+                    }
+                }
+
+                formData.append(key, value);
+            }
+
+            instance.runEvent(instance.EVENT_BEFORE_SUBMIT);
             instance.resetErrors();
 
             fetch(instance.form.attr('action'), {
                 method: instance.form.attr('method'),
-                body: new FormData(instance.form[0]),
+                body: formData,
             }).then(response => response.json())
                 .then(function (data) {
 

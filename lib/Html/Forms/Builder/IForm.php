@@ -2,12 +2,17 @@
 
 namespace Forms\Builder;
 
+use Bitrix24\CrmField\ICrmField;
+use Forms\Fields\IField;
 use Forms\Handlers\IFormHandler;
 
 interface IForm
 {
     public static function handler(): IFormHandler;
 
+    /**
+     * @return IField[] | ICrmField[]
+     */
     public function fields(): array;
 
     public function uniqKey(): string;
