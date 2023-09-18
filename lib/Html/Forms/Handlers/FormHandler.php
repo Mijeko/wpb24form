@@ -55,7 +55,7 @@ class FormHandler implements IFormHandler
             ]);
         }
 
-        $this->bitrix24Api->leadAdd($this->normalize($formData));
+        $b24response = $this->bitrix24Api->leadAdd($this->normalize($formData));
 
         $this->response->success()->out();
     }

@@ -6,6 +6,8 @@ class InputPhoneField extends AField
 {
     public function normalize()
     {
-        return $this->value = ['VALUE' => $this->value, 'VALUE_TYPE' => 'WORK'];
+        $newValue = array();
+        $newValue[] = ['VALUE' => $this->value, 'VALUE_TYPE' => 'WORK'];
+        $this->value = $newValue;
     }
 }

@@ -25,7 +25,7 @@ class HeaderForm extends AMainForm
             HiddenInput::build('utm_campaign')->alias('UF_CRM_1663239221'),
 
             HiddenInput::build('TITLE', [
-                'value' => 'Заполнение формы сайта Рассчитать стоимость',
+                'value' => $_REQUEST['title'] ?? 'Заполнение формы сайта Рассчитать стоимость',
                 'type' => 'hidden',
             ]),
 

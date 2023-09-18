@@ -11,7 +11,11 @@ class Bitrix24Api
     public ICurlWrapper $http;
     public IConverter $converter;
 
-    private $url = 'https://b24-dm961m.bitrix24.ru/rest/1/tag7vhqjjv69kyad';
+    # test
+    #private $url = 'https://b24-dm961m.bitrix24.ru/rest/1/tag7vhqjjv69kyad';
+
+    # prod
+    private $url = 'https://aqva-service.bitrix24.ru/rest/170/ne35ms1w3hgq438p';
 
     const CRM_LEAD_ADD = 'crm.lead.add';
 
@@ -25,7 +29,7 @@ class Bitrix24Api
     public function leadAdd(array $params): array
     {
         return $this->call(self::CRM_LEAD_ADD, [
-            'fields' => $params
+            'FIELDS' => $params
         ])->response();
     }
 
