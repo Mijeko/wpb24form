@@ -1,4 +1,3 @@
-console.log('i work 123');
 document.addEventListener('DOMContentLoaded', function () {
     new FormHandler('.js-handle-custom-form', {
         events: {
@@ -6,7 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log('before submit');
             },
             successSubmit: function () {
-                console.log('success submit');
+                if (ym) {
+                    console.log('yam');
+                    // ym('click', 123321);
+                }
             },
         }
     });

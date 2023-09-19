@@ -14,12 +14,29 @@ use Html\IContent;
 
 abstract class AMainForm implements IForm, IContent
 {
-    public static function build()
-    {
-        return new static();
+    public $id;
+    public $action;
+    public $method;
+
+    public static function build(
+        string $id = null,
+        string $method = 'post',
+        string $action = '/wp-content/plugins/formsintegrator/ajax.php'
+    ) {
+        return new static($id, $method, $action);
     }
 
-    public static function getInstance()
+    public function __construct(
+        string $id = null,
+        string $method = 'post',
+        string $action = '/wp-content/plugins/formsintegrator/ajax.php'
+    ) {
+        $this->id = $id;
+        $this->method = $method;
+        $this->action = $action;
+    }
+
+    public static function getInstance(): self
     {
         return new static();
     }
@@ -27,9 +44,10 @@ abstract class AMainForm implements IForm, IContent
     public function formHeader(): void
     {
         echo HtmlHelper::beginForm(array(
-            'method' => 'post',
-            'action' => '/wp-content/plugins/formsintegrator/ajax.php',
-            'class' => 'js-handle-custom-form'
+            'method' => $this->method,
+            'action' => $this->action,
+            'class' => 'js-handle-custom-form',
+            'id' => $this->id
         ));
 
         echo HtmlHelper::hidden('form', $this->uniqKey());
@@ -40,7 +58,6 @@ abstract class AMainForm implements IForm, IContent
     public function formBody(): void
     {
         foreach ($this->fields() as $fieldModel) {
-
             if (
                 $fieldModel instanceof InputField
                 || $fieldModel instanceof HiddenInput

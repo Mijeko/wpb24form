@@ -4,9 +4,15 @@ namespace Html\Helpers;
 
 class SiteFormHelper
 {
-    public static function dropdown($name, array $variants, $htmlOptions = array())
+    public static function dropdown($name, array $variants, $htmlOptions = array()):string
     {
-        $htmlOptions['name'] = $name;
+        ['class' => $class] = $htmlOptions;
+        unset($htmlOptions['label'], $htmlOptions['type'], $htmlOptions['class']);
+
+        $defaultInputOptions = [
+            'name' => $name,
+            'class' => sprintf('%s %s', 'custom-site-form-field__select', $class),
+        ];
 
         $options = [];
 
@@ -19,17 +25,22 @@ class SiteFormHelper
             $options[] = HtmlHelper::option($value, $key);
         }
 
-        return HtmlHelper::tag('select', implode('', $options), $htmlOptions);
+        $response = HtmlHelper::openTag('div', ['class' => 'custom-site-form-field custom-select', 'id' => 'custom-form-valid-' . $name]);
+
+//            if($label) $response .= HtmlHelper::div($label, ['class'=>'custom-site-form-field__label']);
+
+            $response .= HtmlHelper::tag('select', implode('', $options), array_merge($defaultInputOptions, $htmlOptions));
+
+        $response .= HtmlHelper::endTag('div');
+
+
+        return $response;
     }
 
     public static function input($name, $htmlOptions = array())
     {
-        ['label' => $label] = $htmlOptions;
-        ['type' => $type] = $htmlOptions;
-        ['class' => $class] = $htmlOptions;
-        unset($htmlOptions['label']);
-        unset($htmlOptions['type']);
-        unset($htmlOptions['class']);
+        ['label' => $label, 'type' => $type, 'class' => $class] = $htmlOptions;
+        unset($htmlOptions['label'], $htmlOptions['type'], $htmlOptions['class']);
 
         $defaultInputOptions = [
             'type' => $type,
@@ -50,12 +61,8 @@ class SiteFormHelper
 
     public static function phone($name, $htmlOptions = array())
     {
-        ['label' => $label] = $htmlOptions;
-        ['type' => $type] = $htmlOptions;
-        ['class' => $class] = $htmlOptions;
-        unset($htmlOptions['label']);
-        unset($htmlOptions['type']);
-        unset($htmlOptions['class']);
+        ['label' => $label, 'type' => $type, 'class' => $class] = $htmlOptions;
+        unset($htmlOptions['label'], $htmlOptions['type'], $htmlOptions['class']);
 
         $defaultInputOptions = [
             'type' => $type,

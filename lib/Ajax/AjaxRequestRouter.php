@@ -28,14 +28,14 @@ class AjaxRequestRouter
                 },
             ],
             self::ACTION_GET_MODAL => [
-                ModalGenerator::MODAL_CALLBACK => function () {
-                    ModalGenerator::show(new MainModal('Закажите звонок', CallbackForm::build()));
+                ModalGenerator::MODAL_CALLBACK => function ($formId = null) {
+                    ModalGenerator::show(new MainModal('Закажите звонок', CallbackForm::build($formId)));
                 },
-                ModalGenerator::MODAL_CALCULATE => function () {
+                ModalGenerator::MODAL_CALCULATE => function ($formId = null) {
                     ModalGenerator::show(
                         new MainModal(
                             'Заказать звонок',
-                            HeaderForm::build(),
+                            HeaderForm::build($formId),
                             'Поделитесь мнением о нашей работе или задайте нам любой интересующий вас вопрос в поле комментарий'
                         )
                     );
@@ -83,10 +83,11 @@ class AjaxRequestRouter
             case self::ACTION_GET_MODAL:
 
                 $actions = $this->getActions($action);
-                $formName = $formData['modal'];
+
+                ['modal' => $formName, 'id' => $formId] = $formData;
 
                 if (array_key_exists($formName, $actions)) {
-                    call_user_func($actions[$formName]);
+                    call_user_func($actions[$formName], $formId);
                 }
                 break;
             default:
