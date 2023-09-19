@@ -1,13 +1,22 @@
 document.addEventListener('DOMContentLoaded', function () {
     new FormHandler('.js-handle-custom-form', {
         events: {
-            beforeSubmit: function () {
+            beforeSubmit: function (form) {
                 console.log('before submit');
-            },
-            successSubmit: function () {
+
                 if (ym) {
-                    console.log('yam');
-                    // ym('click', 123321);
+                    ym(88152310, 'reachGoal', 'custom-form');
+                    ym(88152310, 'reachGoal', 'custom-form', {title: form[0].get('TITLE')});
+                    console.log('yam goal');
+                }
+            },
+            successSubmit: function (form) {
+                console.log('successSubmit');
+
+                if (ym) {
+                    ym(88152310, 'reachGoal', 'custom-form');
+                    ym(88152310, 'reachGoal', 'custom-form', {title: form[0].get('TITLE')});
+                    console.log('yam goal');
                 }
             },
         }
@@ -58,7 +67,7 @@ class FormHandler {
                 formData.append(key, value);
             }
 
-            instance.runEvent(instance.EVENT_BEFORE_SUBMIT);
+            instance.runEvent(instance.EVENT_BEFORE_SUBMIT, formData);
             instance.resetErrors();
 
             fetch(instance.form.attr('action'), {
@@ -73,7 +82,7 @@ class FormHandler {
 
                     if (data.status === 200) {
                         instance.form[0].reset();
-                        instance.runEvent(instance.EVENT_SUCCESS_SUBMIT);
+                        instance.runEvent(instance.EVENT_SUCCESS_SUBMIT, formData);
                         instance.showSuccessStash('success');
                     }
                 })
@@ -128,7 +137,7 @@ class FormHandler {
         });
     }
 
-    runEvent(eventName) {
+    runEvent(eventName, ...args) {
 
         const callable = this.getEvent(eventName);
 
@@ -137,7 +146,7 @@ class FormHandler {
         }
 
         try {
-            callable();
+            callable(args);
         } catch (e) {
             console.log('Ошибка при запуске события: ', e);
         }
